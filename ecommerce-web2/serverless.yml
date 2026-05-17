@@ -27,10 +27,10 @@ provider:
         LOG_STDERR_FORMATTER: Bref\Monolog\CloudWatchFormatter
         # Database configuration: https://bref.sh/docs/environment/database
         DB_CONNECTION: pgsql
-        DB_HOST: ${env:DB_HOST}
-        DB_PORT: ${env:DB_PORT}
-        DB_DATABASE: ${env:DB_DATABASE}
-        DB_USERNAME: ${env:DB_USERNAME}
+        DB_HOST: aws-1-sa-east-1.pooler.supabase.com
+        DB_PORT: 6543
+        DB_DATABASE: postgres
+        DB_USERNAME: postgres.sqdvzczxyuttxjwmlbbi
         DB_PASSWORD: ${env:DB_PASSWORD}
 
         # Queue configuration: https://bref.sh/docs/laravel/queues

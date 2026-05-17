@@ -1,58 +1,146 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛒 E-commerce Web 2 (Serverless)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto é um sistema web completo de E-commerce seguindo a arquitetura MVC (Model-View-Controller). Foi desenvolvido no backend com Laravel, banco de dados PostgreSQL (Supabase) e utiliza o paradigma Serverless para deploy no AWS Lambda via Bref.
 
-## About Laravel
+## 📦 Pré-requisitos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Git
+- PHP (versão 8.2 ou superior) com a extensão pdo_pgsql ativa.
+- Composer (Gerenciador de pacotes do PHP).
+- Node.js e NPM (Necessário para empacotar o deploy na AWS).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🛠️ Configuração do Projeto e Banco de Dados (Local)
 
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+1. Clonar o repositório e entrar na pasta
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/SEU-USUARIO/NOME-DO-REPOSITORIO.git
+cd NOME-DO-REPOSITORIO
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+2. Instalar as dependências do PHP
 
-## Contributing
+```bash
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. Configurar as Variáveis de Ambiente (O Cofre)
 
-## Code of Conduct
+   Crie uma cópia do arquivo de configuração padrão:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+cp .env.example .env
+```
 
-## Security Vulnerabilities
+   Abra o arquivo .env gerado e preencha as configurações do banco de dados na nuvem (solicite as credenciais do Supabase ao administrador do projeto):
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```env
+DB_CONNECTION=pgsql
+DB_HOST=aws-1-sa-east-1.pooler.supabase.com
+DB_PORT=6543
+DB_DATABASE=postgres
+DB_USERNAME=postgres.sqdvzczxyuttxjwmlbbi
+DB_PASSWORD=senha_secreta_aqui
+```
 
-## License
+4. Gerar a Chave da Aplicação
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan key:generate
+```
+
+5. Iniciar o Servidor Local
+
+```bash
+php artisan serve
+```
+
+O terminal exibirá um link (ex: http://127.0.0.1:8000). O projeto já estará rodando na sua máquina e conectado ao banco de dados oficial na nuvem!
+
+## ☁️ Como fazer o Deploy para a AWS (Serverless)
+
+Como o projeto utiliza o AWS Academy Learner Lab, as chaves de acesso são temporárias e expiram a cada sessão (aprox. 4 horas). Para enviar atualizações de código para a nuvem, siga os passos abaixo.
+
+### 1. Instalar o Serverless Framework
+
+No terminal da raiz do projeto, instale a ferramenta globalmente:
+
+```bash
+npm install -g serverless
+```
+
+### 2. Configurar as Credenciais da AWS
+
+Inicie o seu Learner Lab, clique em AWS Details e depois em AWS CLI. Copie o bloco de credenciais temporárias fornecido pela plataforma.
+
+#### Se você usa Windows:
+
+- Abra o Explorador de Arquivos e vá até a pasta do seu usuário (ex: C:\Users\SeuNome).
+- Crie uma pasta chamada .aws (com o ponto no início).
+- Dentro dela, crie um arquivo chamado credentials.
+- Abra este arquivo no Bloco de Notas, cole o bloco de credenciais do Learner Lab e salve.
+
+#### Se você usa Linux ou Mac:
+
+- Abra o terminal e crie/edite o arquivo de credenciais rodando:
+
+```bash
+nano ~/.aws/credentials
+```
+
+- Cole o bloco de credenciais do Learner Lab.
+- Salve o arquivo apertando Ctrl + O (Enter) e feche com Ctrl + X.
+
+### ⚠️ ATENÇÃO: O Problema do .txt Oculto
+
+Muitos editores de texto (especialmente o Bloco de Notas no Windows) salvam o arquivo silenciosamente como credentials.txt. A AWS e o Serverless exigem que o arquivo se chame EXATAMENTE credentials (sem nenhuma extensão), caso contrário o acesso será negado.
+
+Para verificar e corrigir isso via terminal:
+
+#### No Windows (PowerShell):
+
+Verifique o nome do arquivo rodando:
+
+```powershell
+ls C:\Users\SeuNome\.aws
+```
+
+(Substitua SeuNome pela sua pasta de usuário).
+
+Se o arquivo estiver listado como credentials.txt, corrija rodando o comando:
+
+```powershell
+Rename-Item -Path C:\Users\SeuNome\.aws\credentials.txt -NewName credentials
+```
+
+#### No Linux / Mac:
+
+Verifique o nome do arquivo rodando:
+
+```bash
+ls ~/.aws
+```
+
+Se o arquivo estiver listado como credentials.txt, corrija rodando:
+
+```bash
+mv ~/.aws/credentials.txt ~/.aws/credentials
+```
+
+### 3. Executar o Deploy
+
+Com as credenciais salvas e com o nome correto, volte ao terminal na pasta do projeto e rode o comando abaixo para empacotar e enviar o sistema para o AWS Lambda:
+
+```bash
+serverless deploy
+```
+
+### 4. Rodar as Migrations na Nuvem
+
+Após o deploy, se você precisar criar ou alterar tabelas no banco de dados através da AWS, utilize o comando abaixo para rodar as migrations diretamente na nuvem (funciona igual no Windows e Linux):
+
+```bash
+serverless bref:cli --args="migrate --force"
+```

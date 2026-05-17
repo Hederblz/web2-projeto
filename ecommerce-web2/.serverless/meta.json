@@ -1,0 +1,175 @@
+{
+  "C:\\Users\\ruana\\OneDrive\\Documentos\\IFPE\\WEB2\\Test\\ecommerce-web2\\serverless.yml": {
+    "versionFramework": "4.36.1",
+    "servicePath": "C:\\Users\\ruana\\OneDrive\\Documentos\\IFPE\\WEB2\\Test\\ecommerce-web2\\serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "laravel",
+      "provider": {
+        "name": "aws",
+        "region": "us-east-1",
+        "stage": "dev",
+        "role": "arn:aws:iam::347189815304:role/LabRole",
+        "environment": {
+          "APP_ENV": "production",
+          "APP_KEY": "base64:dmNbjQFu7YIujE6zE6OZsDdC6QjHMwrqYTrq7Oew46U=",
+          "APP_DEBUG": "1",
+          "SESSION_DRIVER": "cookie",
+          "LOG_CHANNEL": "stderr",
+          "LOG_STDERR_FORMATTER": "Bref\\Monolog\\CloudWatchFormatter",
+          "DB_CONNECTION": "pgsql",
+          "DB_HOST": "aws-1-sa-east-1.pooler.supabase.com",
+          "DB_PORT": "6543",
+          "DB_DATABASE": "postgres",
+          "DB_USERNAME": "postgres.sqdvzczxyuttxjwmlbbi",
+          "DB_PASSWORD": "<REDACTED>",
+          "MAINTENANCE_MODE": null
+        },
+        "versionFunctions": true,
+        "deploymentMethod": "direct"
+      },
+      "functions": {
+        "web": {
+          "handler": "public/index.php",
+          "runtime": "provided.al2023",
+          "timeout": 28,
+          "events": [
+            {
+              "httpApi": "*"
+            }
+          ],
+          "name": "laravel-dev-web",
+          "layers": [
+            "arn:aws:lambda:us-east-1:873528684822:layer:php-84:18"
+          ],
+          "environment": {
+            "BREF_RUNTIME": "Bref\\FpmRuntime\\Main"
+          }
+        },
+        "artisan": {
+          "handler": "artisan",
+          "runtime": "provided.al2023",
+          "timeout": 720,
+          "events": [],
+          "name": "laravel-dev-artisan",
+          "layers": [
+            "arn:aws:lambda:us-east-1:873528684822:layer:php-84:18"
+          ],
+          "environment": {
+            "BREF_RUNTIME": "Bref\\ConsoleRuntime\\Main"
+          }
+        }
+      },
+      "params": {
+        "default": {
+          "appEnv": "dev",
+          "debug": 0
+        },
+        "dev": {
+          "debug": 1
+        }
+      },
+      "package": {
+        "patterns": [
+          "!.env",
+          "!node_modules/**",
+          "!public/storage",
+          "!resources/assets/**",
+          "!resources/css/**",
+          "!resources/images/**",
+          "!resources/js/**",
+          "!storage/**",
+          "!tests/**",
+          "!database/*.sqlite",
+          "!public/build/**",
+          "public/build/manifest.json"
+        ],
+        "artifactsS3KeyDirname": "serverless/laravel/dev/code-artifacts"
+      },
+      "plugins": [
+        "./vendor/bref/bref"
+      ],
+      "constructs": null
+    },
+    "provider": {
+      "name": "aws",
+      "region": "us-east-1",
+      "stage": "dev",
+      "role": "arn:aws:iam::347189815304:role/LabRole",
+      "environment": {
+        "APP_ENV": "production",
+        "APP_KEY": "base64:dmNbjQFu7YIujE6zE6OZsDdC6QjHMwrqYTrq7Oew46U=",
+        "APP_DEBUG": "1",
+        "SESSION_DRIVER": "cookie",
+        "LOG_CHANNEL": "stderr",
+        "LOG_STDERR_FORMATTER": "Bref\\Monolog\\CloudWatchFormatter",
+        "DB_CONNECTION": "pgsql",
+        "DB_HOST": "aws-1-sa-east-1.pooler.supabase.com",
+        "DB_PORT": "6543",
+        "DB_DATABASE": "postgres",
+        "DB_USERNAME": "postgres.sqdvzczxyuttxjwmlbbi",
+        "DB_PASSWORD": "<REDACTED>",
+        "MAINTENANCE_MODE": null
+      },
+      "versionFunctions": true,
+      "deploymentMethod": "direct"
+    },
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "serviceRawFile": "service: laravel\n\n# Set your team ID if you are using Bref Cloud (https://bref.sh/cloud)\n#bref:\n#    team: my-team-id\n\nprovider:\n    name: aws\n    # The AWS region in which to deploy (us-east-1 is the default)\n    region: us-east-1\n    stage: dev\n    role: arn:aws:iam::347189815304:role/LabRole\n    # Environment variables\n    environment:\n        APP_ENV: production\n        # Replace with a secret variable: https://bref.sh/docs/environment/variables#secrets\n        APP_KEY: 'base64:dmNbjQFu7YIujE6zE6OZsDdC6QjHMwrqYTrq7Oew46U='\n        APP_DEBUG: ${param:debug}\n        # Uncomment the line below if you uncomment `constructs.website`\n        #APP_URL: ${construct:website.url}\n        SESSION_DRIVER: cookie # Change to database if you have set up a database\n        # Maintenance mode: https://bref.sh/docs/laravel/maintenance-mode\n        MAINTENANCE_MODE: ${param:maintenance, null}\n        # Logging configuration: https://bref.sh/docs/environment/logs\n        LOG_CHANNEL: stderr\n        LOG_STDERR_FORMATTER: Bref\\Monolog\\CloudWatchFormatter\n        # Database configuration: https://bref.sh/docs/environment/database\n        DB_CONNECTION: pgsql\n        DB_HOST: aws-1-sa-east-1.pooler.supabase.com\n        DB_PORT: 6543\n        DB_DATABASE: postgres\n        DB_USERNAME: postgres.sqdvzczxyuttxjwmlbbi\n        DB_PASSWORD: 6UacANOEEIUdMWg4\n\n        # Queue configuration: https://bref.sh/docs/laravel/queues\n        #QUEUE_CONNECTION: sqs\n        #SQS_QUEUE: ${construct:jobs.queueUrl}\n        # Filesystem configuration: https://bref.sh/docs/laravel/filesystem\n        #FILESYSTEM_DISK: s3\n        #AWS_BUCKET: ${construct:storage.bucketName}\n\nfunctions:\n\n    # This function runs the Laravel website/API\n    web:\n        handler: public/index.php\n        runtime: php-84-fpm\n        timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)\n        events:\n            - httpApi: '*'\n\n    # This function lets us run artisan commands in Lambda\n    artisan:\n        handler: artisan\n        runtime: php-84-console\n        timeout: 720 # in seconds\n        # Uncomment to also run the scheduler every minute\n        #events:\n        #    - schedule:\n        #          rate: rate(1 minute)\n        #          input: '\"schedule:run\"'\n\nconstructs:\n    # SQS queue for Laravel jobs\n    # See https://bref.sh/docs/laravel/queues\n    #jobs:\n    #    type: queue\n    #    worker:\n    #        handler: Bref\\LaravelBridge\\Queue\\QueueHandler\n    #        runtime: php-84\n    #        timeout: 60 # seconds\n\n    # S3 bucket for file storage\n    #storage:\n    #    type: storage\n    #    lifecycleRules:\n    #        # Files in the `tmp/` folder will be cleaned after 1 day (e.g. failed uploads, temp files, etc.)\n    #        -   prefix: tmp/\n    #            expirationInDays: 1\n    #    # S3 buckets have ACLs disabled by default since 2023, but Laravel/Flysystem sends ACL\n    #    # headers on every S3 operation. This setting avoids errors (the bucket stays 100% private).\n    #    allowAcl: true\n    #    # CORS is required for uploading files from the browser via presigned URLs, put the URL of your website here\n    #    # See https://bref.sh/docs/laravel/file-storage#large-files and https://github.com/getlift/lift/blob/master/docs/storage.md#cors\n    #    cors: ${construct:website.url}\n\n    # CloudFront + S3 for website assets (compatible with Inertia, Livewire, etc.)\n    # See https://bref.sh/docs/use-cases/websites\n    #website:\n    #    type: server-side-website\n    #    assets:\n    #        '/build/*': public/build\n    #        #'/vendor/*': public/vendor # Uncomment if the public/vendor exists\n    #        '/favicon.ico': public/favicon.ico\n    #        '/robots.txt': public/robots.txt\n\n# Environment-specific parameters\n# See https://github.com/oss-serverless/serverless/blob/main/docs/guides/parameters.md\nparams:\n    default:\n        # Laravel's APP_ENV. See https://bref.sh/docs/laravel/environments\n        appEnv: ${sls:stage}\n        debug: 0\n    prod:\n        # Laravel expects \"production\" for `app()->isProduction()` to work correctly\n        appEnv: production\n    dev:\n        debug: 1 # Enable debug in `dev`\n\npackage:\n    # Files and directories to exclude from deployment\n    patterns:\n        - '!.env' # Don't deploy local config\n        - '!node_modules/**'\n        - '!public/storage'\n        - '!resources/assets/**'\n        - '!resources/css/**'\n        - '!resources/images/**'\n        - '!resources/js/**'\n        - '!storage/**'\n        - '!tests/**'\n        - '!database/*.sqlite'\n        # Exclude assets except for the manifest file\n        - '!public/build/**'\n        - 'public/build/manifest.json'\n\nplugins:\n    # We need to include the Bref plugin\n    - ./vendor/bref/bref\n    # Uncomment the Serverless Lift plugin if you use constructs\n    # See https://github.com/getlift/lift",
+    "command": [
+      "bref:cli"
+    ],
+    "options": {
+      "args": "migrate:fresh --force"
+    },
+    "orgId": "99e26e59-7768-4bd5-a100-762cd05474f5",
+    "orgName": "ruanprojects",
+    "userId": "ljm3SvphP2r3Yjz2sz",
+    "userName": "ruanprojects",
+    "serviceProviderAwsAccountId": "347189815304",
+    "serviceProviderAwsCfStackName": "laravel-dev",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:347189815304:stack/laravel-dev/c3b77e70-5142-11f1-ae14-122443e5e5f9",
+    "serviceProviderAwsCfStackCreated": "2026-05-16T16:17:41.975Z",
+    "serviceProviderAwsCfStackUpdated": "2026-05-16T17:01:58.090Z",
+    "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
+    "serviceProviderAwsCfStackOutputs": [
+      {
+        "OutputKey": "WebLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:347189815304:function:laravel-dev-web:5",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-laravel-dev-WebLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "HttpApiId",
+        "OutputValue": "qktuepw0x4",
+        "Description": "Id of the HTTP API",
+        "ExportName": "sls-laravel-dev-HttpApiId"
+      },
+      {
+        "OutputKey": "ArtisanLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:347189815304:function:laravel-dev-artisan:5",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-laravel-dev-ArtisanLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "ServerlessDeploymentBucketName",
+        "OutputValue": "serverless-framework-deployments-us-east-1-581eebee-57df",
+        "ExportName": "sls-laravel-dev-ServerlessDeploymentBucketName"
+      },
+      {
+        "OutputKey": "HttpApiUrl",
+        "OutputValue": "https://qktuepw0x4.execute-api.us-east-1.amazonaws.com",
+        "Description": "URL of the HTTP API",
+        "ExportName": "sls-laravel-dev-HttpApiUrl"
+      }
+    ]
+  }
+}

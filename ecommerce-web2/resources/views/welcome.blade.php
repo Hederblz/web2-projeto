@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Nosso E-commerce | Início</title>
+    <title>E-commerce | Início</title>
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -13,7 +13,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ url('/') }}" class="font-bold text-2xl tracking-wider text-blue-400 hover:text-blue-300 transition">Nosso E-commerce</a>
+                    <a href="{{ url('/') }}" class="font-bold text-2xl tracking-wider text-blue-400 hover:text-blue-300 transition">E-commerce</a>
                 </div>
                 
                 <div class="flex items-center space-x-4">
@@ -66,7 +66,7 @@
     </div>
 
     <footer class="bg-white border-t border-gray-200 mt-12 py-8 text-center text-sm text-gray-500">
-        <p>&copy; {{ date('Y') }} Nosso E-commerce. Todos os direitos reservados.</p>
+        <p>&copy; {{ date('Y') }} E-commerce. Todos os direitos reservados.</p>
         <p class="mt-2">Sistema desenvolvido em Laravel.</p>
     </footer>
 

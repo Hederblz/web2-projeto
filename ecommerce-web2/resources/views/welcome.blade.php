@@ -31,14 +31,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" href="{{ url('/produtos') }}">Produtos</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ url('/users') }}">Usuários</a>
-                    </li>
                 </ul>
-                <div class="d-flex align-items-center">
-                    <a href="{{ url('/login') }}" class="text-secondary text-decoration-none me-4">Entrar</a>
-                    <a href="{{ url('/register') }}" class="btn btn-secondary shadow-sm rounded-3 px-3">Criar Conta</a>
-                </div>
             </div>
         </div>
     </nav>

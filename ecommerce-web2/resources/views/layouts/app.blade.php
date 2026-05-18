@@ -55,9 +55,6 @@
                     <li class="nav-item">
                         <a class="nav-link px-3 rounded-3 {{ request()->routeIs('produtos.*') ? 'active' : '' }}" href="{{ route('produtos.index') }}">Produtos</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3 rounded-3 {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">Usuários</a>
-                    </li>
                 </ul>
             </div>
         </div>

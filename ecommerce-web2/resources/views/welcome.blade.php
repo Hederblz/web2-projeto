@@ -1,74 +1,88 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="pt-BR">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>E-commerce | Início</title>
-    
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="antialiased bg-gray-50 text-gray-800 font-sans selection:bg-blue-500 selection:text-white">
 
-    <nav class="bg-gray-900 text-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ url('/') }}" class="font-bold text-2xl tracking-wider text-blue-400 hover:text-blue-300 transition">E-commerce</a>
-                </div>
-                
-                <div class="flex items-center space-x-4">
-                    <a href="{{ url('/categorias') }}" class="text-gray-300 hover:text-white font-medium transition">Categorias</a>
-                    <a href="{{ url('/produtos') }}" class="text-gray-300 hover:text-white font-medium transition">Produtos</a>
-                    <a href="{{ url('/users') }}" class="text-gray-300 hover:text-white font-medium transition">Usuários</a>
-                    
-                    <div class="border-l border-gray-600 pl-4 ml-2 flex items-center space-x-4">
-                        <a href="{{ url('/login') }}" class="text-gray-400 hover:text-white text-sm transition">Entrar</a>
-                        <a href="{{ url('/register') }}" class="bg-gray-700 hover:bg-gray-600 text-white text-sm px-4 py-2 rounded-lg transition shadow">Criar Conta</a>
-                    </div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light text-dark" style="font-family: 'DM Sans', sans-serif;">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary fs-4" href="{{ url('/') }}" style="font-family: 'Syne', sans-serif;">
+                E-commerce
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url('/categorias') }}">Categorias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url('/produtos') }}">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ url('/users') }}">Usuários</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="{{ url('/login') }}" class="text-secondary text-decoration-none me-4">Entrar</a>
+                    <a href="{{ url('/register') }}" class="btn btn-secondary shadow-sm rounded-3 px-3">Criar Conta</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="relative bg-white overflow-hidden shadow-sm">
-        <div class="max-w-7xl mx-auto">
-            <div class="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32 pt-16 lg:pt-24">
-                <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-                    <div class="sm:text-center lg:text-left">
-                        <h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                            <span class="block xl:inline">Gerencie sua loja com</span>
-                            <span class="block text-blue-600 xl:inline">facilidade e rapidez</span>
-                        </h1>
-                        <p class="mt-3 text-base text-gray-600 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                            O sistema completo para o seu E-commerce. Controle suas categorias, gerencie o estoque dos seus produtos e administre seus usuários em um só lugar de forma simples e intuitiva.
-                        </p>
-                        
-                        <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                            <div class="rounded-md shadow">
-                                <a href="{{ url('/produtos') }}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transition">
-                                    Acessar Produtos
-                                </a>
-                            </div>
-                            <div class="mt-3 sm:mt-0 sm:ml-3">
-                                <a href="{{ url('/categorias') }}" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-blue-700 bg-blue-100 hover:bg-blue-200 md:py-4 md:text-lg md:px-10 transition">
-                                    Ver Categorias
-                                </a>
-                            </div>
-                        </div>
-                        
+    <div class="bg-white shadow-sm overflow-hidden position-relative">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 py-5 py-lg-5 pe-lg-5 z-1">
+                    <h1 class="display-4 fw-bolder text-dark mb-4" style="font-family: 'Syne', sans-serif;">
+                        Gerencie sua loja com <br>
+                        <span class="text-primary">facilidade e rapidez</span>
+                    </h1>
+                    <p class="lead text-secondary mb-5">
+                        O sistema completo para o seu E-commerce. Controle suas categorias, gerencie o estoque dos seus produtos e administre seus usuários em um só lugar de forma simples e intuitiva.
+                    </p>
+                    <div class="d-grid gap-3 d-md-flex justify-content-md-start">
+                        <a href="{{ url('/produtos') }}" class="btn btn-primary btn-lg px-4 py-3 shadow-sm rounded-3 fw-medium">
+                            Acessar Produtos
+                        </a>
+                        <a href="{{ url('/categorias') }}" class="btn text-primary fw-medium btn-lg px-4 py-3 rounded-3" style="background-color: #e7f1ff; border: 1px solid #cfe2ff;">
+                            Ver Categorias
+                        </a>
                     </div>
-                </main>
+                </div>
             </div>
         </div>
-        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-            <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Imagem de E-commerce">
+        
+        <div class="position-absolute end-0 top-0 h-100 d-none d-lg-block" style="width: 50%;">
+            <img class="w-100 h-100" style="object-fit: cover;" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="E-commerce">
+        </div>
+        
+        <div class="d-block d-lg-none mt-4">
+             <img class="w-100" style="height: 300px; object-fit: cover;" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="E-commerce">
         </div>
     </div>
 
-    <footer class="bg-white border-t border-gray-200 mt-12 py-8 text-center text-sm text-gray-500">
-        <p>&copy; {{ date('Y') }} E-commerce. Todos os direitos reservados.</p>
-        <p class="mt-2">Sistema desenvolvido em Laravel.</p>
+    <footer class="bg-white border-top mt-5 py-5 text-center text-secondary small">
+        <div class="container">
+            <p class="mb-1">&copy; {{ date('Y') }} E-commerce. Todos os direitos reservados.</p>
+            <p class="mb-0">Sistema desenvolvido em Laravel.</p>
+        </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

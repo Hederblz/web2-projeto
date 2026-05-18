@@ -1,0 +1,127 @@
+body {
+    margin: 0;
+    padding: 0;
+    padding-top: 64px;
+    font-family: 'DM Sans', sans-serif;
+    background-color: #f0f1f8;
+}
+
+.navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(9, 9, 15, 0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar__logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+}
+
+.navbar__logo-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #5b6cff;
+    box-shadow: 0 0 10px #5b6cff;
+    flex-shrink: 0;
+}
+
+.navbar__links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.navbar__link {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #8888aa;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.navbar__link:hover, 
+.navbar__link.active {
+    color: #ffffff;
+}
+
+.navbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border-radius: 9999px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn--ghost {
+    color: #8888aa;
+    background: transparent;
+}
+.btn--ghost:hover {
+    color: #ffffff;
+}
+
+.btn--primary {
+    background: #5b6cff;
+    color: #ffffff;
+}
+.btn--primary:hover {
+    background: #4a5aef;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(91, 108, 255, 0.4);
+}
+
+.alert-container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 24px 24px 0;
+}
+.alert-success {
+    background: #eef0ff;
+    border: 1px solid rgba(91, 108, 255, 0.2);
+    padding: 16px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #4a4a6a;
+    font-weight: 500;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(91, 108, 255, 0.05);
+}
+.alert-success svg {
+    color: #5b6cff;
+}

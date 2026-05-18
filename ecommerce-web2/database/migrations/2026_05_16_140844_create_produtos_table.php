@@ -10,11 +10,10 @@ return new class extends Migration
     {
         Schema::create('produtos', function (Blueprint $table) {
             $table->id();
-            // Chave estrangeira ligando o produto a uma categoria
             $table->foreignId('categoria_id')->constrained()->onDelete('cascade');
             $table->string('nome');
             $table->text('descricao')->nullable();
-            $table->decimal('preco', 10, 2); // 10 dígitos no total, 2 decimais
+            $table->decimal('preco', 10, 2);
             $table->integer('estoque')->default(0);
             $table->timestamps();
         });

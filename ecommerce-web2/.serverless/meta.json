@@ -1,9 +1,10 @@
 {
-  "C:\\Users\\ruana\\OneDrive\\Documentos\\IFPE\\WEB2\\Test\\ecommerce-web2\\serverless.yml": {
+  "C:\\Users\\ruana\\OneDrive\\Documentos\\IFPE\\WEB2\\WEB2_projeto1\\ecommerce-web2\\serverless.yml": {
     "versionFramework": "4.36.1",
-    "servicePath": "C:\\Users\\ruana\\OneDrive\\Documentos\\IFPE\\WEB2\\Test\\ecommerce-web2\\serverless.yml",
+    "servicePath": "C:\\Users\\ruana\\OneDrive\\Documentos\\IFPE\\WEB2\\WEB2_projeto1\\ecommerce-web2\\serverless.yml",
     "serviceConfigFileName": "serverless.yml",
     "service": {
+      "useDotenv": true,
       "service": "laravel",
       "provider": {
         "name": "aws",
@@ -12,7 +13,7 @@
         "role": "arn:aws:iam::347189815304:role/LabRole",
         "environment": {
           "APP_ENV": "production",
-          "APP_KEY": "base64:dmNbjQFu7YIujE6zE6OZsDdC6QjHMwrqYTrq7Oew46U=",
+          "APP_KEY": "base64:wBXcS7u2Bwg6YodBWAggqSGOlXNWWkp9yM9mbCikUq8=",
           "APP_DEBUG": "1",
           "SESSION_DRIVER": "cookie",
           "LOG_CHANNEL": "stderr",
@@ -26,7 +27,277 @@
           "MAINTENANCE_MODE": null
         },
         "versionFunctions": true,
-        "deploymentMethod": "direct"
+        "deploymentMethod": "direct",
+        "compiledCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {
+            "WebLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/laravel-dev-web"
+              }
+            },
+            "ArtisanLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/laravel-dev-artisan"
+              }
+            },
+            "WebLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-581eebee-57df",
+                  "S3Key": "serverless/laravel/dev/1779067582050-2026-05-18T01:26:22.050Z/laravel.zip"
+                },
+                "Handler": "public/index.php",
+                "Runtime": "provided.al2023",
+                "FunctionName": "laravel-dev-web",
+                "MemorySize": 1024,
+                "Timeout": 28,
+                "Environment": {
+                  "Variables": {
+                    "APP_ENV": "production",
+                    "APP_KEY": "base64:wBXcS7u2Bwg6YodBWAggqSGOlXNWWkp9yM9mbCikUq8=",
+                    "APP_DEBUG": "1",
+                    "SESSION_DRIVER": "cookie",
+                    "LOG_CHANNEL": "stderr",
+                    "LOG_STDERR_FORMATTER": "Bref\\Monolog\\CloudWatchFormatter",
+                    "DB_CONNECTION": "pgsql",
+                    "DB_HOST": "aws-1-sa-east-1.pooler.supabase.com",
+                    "DB_PORT": "6543",
+                    "DB_DATABASE": "postgres",
+                    "DB_USERNAME": "postgres.sqdvzczxyuttxjwmlbbi",
+                    "DB_PASSWORD": "<REDACTED>",
+                    "BREF_RUNTIME": "Bref\\FpmRuntime\\Main"
+                  }
+                },
+                "Role": "arn:aws:iam::347189815304:role/LabRole",
+                "Layers": [
+                  "arn:aws:lambda:us-east-1:873528684822:layer:php-84:18"
+                ]
+              },
+              "DependsOn": [
+                "WebLogGroup"
+              ]
+            },
+            "ArtisanLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-581eebee-57df",
+                  "S3Key": "serverless/laravel/dev/1779067582050-2026-05-18T01:26:22.050Z/laravel.zip"
+                },
+                "Handler": "artisan",
+                "Runtime": "provided.al2023",
+                "FunctionName": "laravel-dev-artisan",
+                "MemorySize": 1024,
+                "Timeout": 720,
+                "Environment": {
+                  "Variables": {
+                    "APP_ENV": "production",
+                    "APP_KEY": "base64:wBXcS7u2Bwg6YodBWAggqSGOlXNWWkp9yM9mbCikUq8=",
+                    "APP_DEBUG": "1",
+                    "SESSION_DRIVER": "cookie",
+                    "LOG_CHANNEL": "stderr",
+                    "LOG_STDERR_FORMATTER": "Bref\\Monolog\\CloudWatchFormatter",
+                    "DB_CONNECTION": "pgsql",
+                    "DB_HOST": "aws-1-sa-east-1.pooler.supabase.com",
+                    "DB_PORT": "6543",
+                    "DB_DATABASE": "postgres",
+                    "DB_USERNAME": "postgres.sqdvzczxyuttxjwmlbbi",
+                    "DB_PASSWORD": "<REDACTED>",
+                    "BREF_RUNTIME": "Bref\\ConsoleRuntime\\Main"
+                  }
+                },
+                "Role": "arn:aws:iam::347189815304:role/LabRole",
+                "Layers": [
+                  "arn:aws:lambda:us-east-1:873528684822:layer:php-84:18"
+                ]
+              },
+              "DependsOn": [
+                "ArtisanLogGroup"
+              ]
+            },
+            "WebLambdaVersionj38wr2GFMTSXpJPlvQpfl1XlgXnwxohsF1flWTQ": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "WebLambdaFunction"
+                },
+                "CodeSha256": "TeXjQPN0bzVk78xmsqInSJIs1XXlnnQz6CO7r6JnmaM="
+              }
+            },
+            "ArtisanLambdaVersionVNSLnBOY8uo0k68jhHYsjPCpgwW2PYLHnYmeGwuH4": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "ArtisanLambdaFunction"
+                },
+                "CodeSha256": "TeXjQPN0bzVk78xmsqInSJIs1XXlnnQz6CO7r6JnmaM="
+              }
+            },
+            "HttpApi": {
+              "Type": "AWS::ApiGatewayV2::Api",
+              "Properties": {
+                "Name": "dev-laravel",
+                "ProtocolType": "HTTP"
+              }
+            },
+            "HttpApiStage": {
+              "Type": "AWS::ApiGatewayV2::Stage",
+              "Properties": {
+                "ApiId": {
+                  "Ref": "HttpApi"
+                },
+                "StageName": "$default",
+                "AutoDeploy": true,
+                "DefaultRouteSettings": {
+                  "DetailedMetricsEnabled": false
+                }
+              }
+            },
+            "WebLambdaPermissionHttpApi": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "WebLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "HttpApi"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "HttpApiIntegrationWeb": {
+              "Type": "AWS::ApiGatewayV2::Integration",
+              "Properties": {
+                "ApiId": {
+                  "Ref": "HttpApi"
+                },
+                "IntegrationType": "AWS_PROXY",
+                "IntegrationUri": {
+                  "Fn::GetAtt": [
+                    "WebLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "PayloadFormatVersion": "2.0",
+                "TimeoutInMillis": 30000
+              }
+            },
+            "HttpApiRouteDefault": {
+              "Type": "AWS::ApiGatewayV2::Route",
+              "Properties": {
+                "ApiId": {
+                  "Ref": "HttpApi"
+                },
+                "RouteKey": "$default",
+                "Target": {
+                  "Fn::Join": [
+                    "/",
+                    [
+                      "integrations",
+                      {
+                        "Ref": "HttpApiIntegrationWeb"
+                      }
+                    ]
+                  ]
+                }
+              },
+              "DependsOn": "HttpApiIntegrationWeb"
+            }
+          },
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": "serverless-framework-deployments-us-east-1-581eebee-57df",
+              "Export": {
+                "Name": "sls-laravel-dev-ServerlessDeploymentBucketName"
+              }
+            },
+            "WebLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "WebLambdaVersionj38wr2GFMTSXpJPlvQpfl1XlgXnwxohsF1flWTQ"
+              },
+              "Export": {
+                "Name": "sls-laravel-dev-WebLambdaFunctionQualifiedArn"
+              }
+            },
+            "ArtisanLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "ArtisanLambdaVersionVNSLnBOY8uo0k68jhHYsjPCpgwW2PYLHnYmeGwuH4"
+              },
+              "Export": {
+                "Name": "sls-laravel-dev-ArtisanLambdaFunctionQualifiedArn"
+              }
+            },
+            "HttpApiId": {
+              "Description": "Id of the HTTP API",
+              "Value": {
+                "Ref": "HttpApi"
+              },
+              "Export": {
+                "Name": "sls-laravel-dev-HttpApiId"
+              }
+            },
+            "HttpApiUrl": {
+              "Description": "URL of the HTTP API",
+              "Value": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "https://",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    ".execute-api.",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ".",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    }
+                  ]
+                ]
+              },
+              "Export": {
+                "Name": "sls-laravel-dev-HttpApiUrl"
+              }
+            }
+          }
+        },
+        "vpc": {}
       },
       "functions": {
         "web": {
@@ -35,7 +306,8 @@
           "timeout": 28,
           "events": [
             {
-              "httpApi": "*"
+              "httpApi": "*",
+              "resolvedMethod": "ANY"
             }
           ],
           "name": "laravel-dev-web",
@@ -44,7 +316,11 @@
           ],
           "environment": {
             "BREF_RUNTIME": "Bref\\FpmRuntime\\Main"
-          }
+          },
+          "package": {},
+          "memory": 1024,
+          "vpc": {},
+          "versionLogicalId": "WebLambdaVersionj38wr2GFMTSXpJPlvQpfl1XlgXnwxohsF1flWTQ"
         },
         "artisan": {
           "handler": "artisan",
@@ -57,7 +333,11 @@
           ],
           "environment": {
             "BREF_RUNTIME": "Bref\\ConsoleRuntime\\Main"
-          }
+          },
+          "package": {},
+          "memory": 1024,
+          "vpc": {},
+          "versionLogicalId": "ArtisanLambdaVersionVNSLnBOY8uo0k68jhHYsjPCpgwW2PYLHnYmeGwuH4"
         }
       },
       "params": {
@@ -84,7 +364,10 @@
           "!public/build/**",
           "public/build/manifest.json"
         ],
-        "artifactsS3KeyDirname": "serverless/laravel/dev/code-artifacts"
+        "artifactsS3KeyDirname": "serverless/laravel/dev/code-artifacts",
+        "deploymentBucket": "serverless-framework-deployments-us-east-1-581eebee-57df",
+        "artifact": "C:\\Users\\ruana\\OneDrive\\Documentos\\IFPE\\WEB2\\WEB2_projeto1\\ecommerce-web2\\.serverless\\laravel.zip",
+        "artifactDirectoryName": "serverless/laravel/dev/1779067582050-2026-05-18T01:26:22.050Z"
       },
       "plugins": [
         "./vendor/bref/bref"
@@ -98,7 +381,7 @@
       "role": "arn:aws:iam::347189815304:role/LabRole",
       "environment": {
         "APP_ENV": "production",
-        "APP_KEY": "base64:dmNbjQFu7YIujE6zE6OZsDdC6QjHMwrqYTrq7Oew46U=",
+        "APP_KEY": "base64:wBXcS7u2Bwg6YodBWAggqSGOlXNWWkp9yM9mbCikUq8=",
         "APP_DEBUG": "1",
         "SESSION_DRIVER": "cookie",
         "LOG_CHANNEL": "stderr",
@@ -112,7 +395,277 @@
         "MAINTENANCE_MODE": null
       },
       "versionFunctions": true,
-      "deploymentMethod": "direct"
+      "deploymentMethod": "direct",
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "WebLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/laravel-dev-web"
+            }
+          },
+          "ArtisanLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/laravel-dev-artisan"
+            }
+          },
+          "WebLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-581eebee-57df",
+                "S3Key": "serverless/laravel/dev/1779067582050-2026-05-18T01:26:22.050Z/laravel.zip"
+              },
+              "Handler": "public/index.php",
+              "Runtime": "provided.al2023",
+              "FunctionName": "laravel-dev-web",
+              "MemorySize": 1024,
+              "Timeout": 28,
+              "Environment": {
+                "Variables": {
+                  "APP_ENV": "production",
+                  "APP_KEY": "base64:wBXcS7u2Bwg6YodBWAggqSGOlXNWWkp9yM9mbCikUq8=",
+                  "APP_DEBUG": "1",
+                  "SESSION_DRIVER": "cookie",
+                  "LOG_CHANNEL": "stderr",
+                  "LOG_STDERR_FORMATTER": "Bref\\Monolog\\CloudWatchFormatter",
+                  "DB_CONNECTION": "pgsql",
+                  "DB_HOST": "aws-1-sa-east-1.pooler.supabase.com",
+                  "DB_PORT": "6543",
+                  "DB_DATABASE": "postgres",
+                  "DB_USERNAME": "postgres.sqdvzczxyuttxjwmlbbi",
+                  "DB_PASSWORD": "<REDACTED>",
+                  "BREF_RUNTIME": "Bref\\FpmRuntime\\Main"
+                }
+              },
+              "Role": "arn:aws:iam::347189815304:role/LabRole",
+              "Layers": [
+                "arn:aws:lambda:us-east-1:873528684822:layer:php-84:18"
+              ]
+            },
+            "DependsOn": [
+              "WebLogGroup"
+            ]
+          },
+          "ArtisanLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-581eebee-57df",
+                "S3Key": "serverless/laravel/dev/1779067582050-2026-05-18T01:26:22.050Z/laravel.zip"
+              },
+              "Handler": "artisan",
+              "Runtime": "provided.al2023",
+              "FunctionName": "laravel-dev-artisan",
+              "MemorySize": 1024,
+              "Timeout": 720,
+              "Environment": {
+                "Variables": {
+                  "APP_ENV": "production",
+                  "APP_KEY": "base64:wBXcS7u2Bwg6YodBWAggqSGOlXNWWkp9yM9mbCikUq8=",
+                  "APP_DEBUG": "1",
+                  "SESSION_DRIVER": "cookie",
+                  "LOG_CHANNEL": "stderr",
+                  "LOG_STDERR_FORMATTER": "Bref\\Monolog\\CloudWatchFormatter",
+                  "DB_CONNECTION": "pgsql",
+                  "DB_HOST": "aws-1-sa-east-1.pooler.supabase.com",
+                  "DB_PORT": "6543",
+                  "DB_DATABASE": "postgres",
+                  "DB_USERNAME": "postgres.sqdvzczxyuttxjwmlbbi",
+                  "DB_PASSWORD": "<REDACTED>",
+                  "BREF_RUNTIME": "Bref\\ConsoleRuntime\\Main"
+                }
+              },
+              "Role": "arn:aws:iam::347189815304:role/LabRole",
+              "Layers": [
+                "arn:aws:lambda:us-east-1:873528684822:layer:php-84:18"
+              ]
+            },
+            "DependsOn": [
+              "ArtisanLogGroup"
+            ]
+          },
+          "WebLambdaVersionj38wr2GFMTSXpJPlvQpfl1XlgXnwxohsF1flWTQ": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "WebLambdaFunction"
+              },
+              "CodeSha256": "TeXjQPN0bzVk78xmsqInSJIs1XXlnnQz6CO7r6JnmaM="
+            }
+          },
+          "ArtisanLambdaVersionVNSLnBOY8uo0k68jhHYsjPCpgwW2PYLHnYmeGwuH4": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "ArtisanLambdaFunction"
+              },
+              "CodeSha256": "TeXjQPN0bzVk78xmsqInSJIs1XXlnnQz6CO7r6JnmaM="
+            }
+          },
+          "HttpApi": {
+            "Type": "AWS::ApiGatewayV2::Api",
+            "Properties": {
+              "Name": "dev-laravel",
+              "ProtocolType": "HTTP"
+            }
+          },
+          "HttpApiStage": {
+            "Type": "AWS::ApiGatewayV2::Stage",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "StageName": "$default",
+              "AutoDeploy": true,
+              "DefaultRouteSettings": {
+                "DetailedMetricsEnabled": false
+              }
+            }
+          },
+          "WebLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "WebLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationWeb": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "Fn::GetAtt": [
+                  "WebLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 30000
+            }
+          },
+          "HttpApiRouteDefault": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "$default",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationWeb"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationWeb"
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "serverless-framework-deployments-us-east-1-581eebee-57df",
+            "Export": {
+              "Name": "sls-laravel-dev-ServerlessDeploymentBucketName"
+            }
+          },
+          "WebLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "WebLambdaVersionj38wr2GFMTSXpJPlvQpfl1XlgXnwxohsF1flWTQ"
+            },
+            "Export": {
+              "Name": "sls-laravel-dev-WebLambdaFunctionQualifiedArn"
+            }
+          },
+          "ArtisanLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "ArtisanLambdaVersionVNSLnBOY8uo0k68jhHYsjPCpgwW2PYLHnYmeGwuH4"
+            },
+            "Export": {
+              "Name": "sls-laravel-dev-ArtisanLambdaFunctionQualifiedArn"
+            }
+          },
+          "HttpApiId": {
+            "Description": "Id of the HTTP API",
+            "Value": {
+              "Ref": "HttpApi"
+            },
+            "Export": {
+              "Name": "sls-laravel-dev-HttpApiId"
+            }
+          },
+          "HttpApiUrl": {
+            "Description": "URL of the HTTP API",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "https://",
+                  {
+                    "Ref": "HttpApi"
+                  },
+                  ".execute-api.",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix"
+                  }
+                ]
+              ]
+            },
+            "Export": {
+              "Name": "sls-laravel-dev-HttpApiUrl"
+            }
+          }
+        }
+      },
+      "vpc": {}
     },
     "dashboard": {
       "isEnabledForService": false,
@@ -123,13 +676,11 @@
       "serviceProvider": null,
       "instanceParameters": null
     },
-    "serviceRawFile": "service: laravel\n\n# Set your team ID if you are using Bref Cloud (https://bref.sh/cloud)\n#bref:\n#    team: my-team-id\n\nprovider:\n    name: aws\n    # The AWS region in which to deploy (us-east-1 is the default)\n    region: us-east-1\n    stage: dev\n    role: arn:aws:iam::347189815304:role/LabRole\n    # Environment variables\n    environment:\n        APP_ENV: production\n        # Replace with a secret variable: https://bref.sh/docs/environment/variables#secrets\n        APP_KEY: 'base64:dmNbjQFu7YIujE6zE6OZsDdC6QjHMwrqYTrq7Oew46U='\n        APP_DEBUG: ${param:debug}\n        # Uncomment the line below if you uncomment `constructs.website`\n        #APP_URL: ${construct:website.url}\n        SESSION_DRIVER: cookie # Change to database if you have set up a database\n        # Maintenance mode: https://bref.sh/docs/laravel/maintenance-mode\n        MAINTENANCE_MODE: ${param:maintenance, null}\n        # Logging configuration: https://bref.sh/docs/environment/logs\n        LOG_CHANNEL: stderr\n        LOG_STDERR_FORMATTER: Bref\\Monolog\\CloudWatchFormatter\n        # Database configuration: https://bref.sh/docs/environment/database\n        DB_CONNECTION: pgsql\n        DB_HOST: aws-1-sa-east-1.pooler.supabase.com\n        DB_PORT: 6543\n        DB_DATABASE: postgres\n        DB_USERNAME: postgres.sqdvzczxyuttxjwmlbbi\n        DB_PASSWORD: 6UacANOEEIUdMWg4\n\n        # Queue configuration: https://bref.sh/docs/laravel/queues\n        #QUEUE_CONNECTION: sqs\n        #SQS_QUEUE: ${construct:jobs.queueUrl}\n        # Filesystem configuration: https://bref.sh/docs/laravel/filesystem\n        #FILESYSTEM_DISK: s3\n        #AWS_BUCKET: ${construct:storage.bucketName}\n\nfunctions:\n\n    # This function runs the Laravel website/API\n    web:\n        handler: public/index.php\n        runtime: php-84-fpm\n        timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)\n        events:\n            - httpApi: '*'\n\n    # This function lets us run artisan commands in Lambda\n    artisan:\n        handler: artisan\n        runtime: php-84-console\n        timeout: 720 # in seconds\n        # Uncomment to also run the scheduler every minute\n        #events:\n        #    - schedule:\n        #          rate: rate(1 minute)\n        #          input: '\"schedule:run\"'\n\nconstructs:\n    # SQS queue for Laravel jobs\n    # See https://bref.sh/docs/laravel/queues\n    #jobs:\n    #    type: queue\n    #    worker:\n    #        handler: Bref\\LaravelBridge\\Queue\\QueueHandler\n    #        runtime: php-84\n    #        timeout: 60 # seconds\n\n    # S3 bucket for file storage\n    #storage:\n    #    type: storage\n    #    lifecycleRules:\n    #        # Files in the `tmp/` folder will be cleaned after 1 day (e.g. failed uploads, temp files, etc.)\n    #        -   prefix: tmp/\n    #            expirationInDays: 1\n    #    # S3 buckets have ACLs disabled by default since 2023, but Laravel/Flysystem sends ACL\n    #    # headers on every S3 operation. This setting avoids errors (the bucket stays 100% private).\n    #    allowAcl: true\n    #    # CORS is required for uploading files from the browser via presigned URLs, put the URL of your website here\n    #    # See https://bref.sh/docs/laravel/file-storage#large-files and https://github.com/getlift/lift/blob/master/docs/storage.md#cors\n    #    cors: ${construct:website.url}\n\n    # CloudFront + S3 for website assets (compatible with Inertia, Livewire, etc.)\n    # See https://bref.sh/docs/use-cases/websites\n    #website:\n    #    type: server-side-website\n    #    assets:\n    #        '/build/*': public/build\n    #        #'/vendor/*': public/vendor # Uncomment if the public/vendor exists\n    #        '/favicon.ico': public/favicon.ico\n    #        '/robots.txt': public/robots.txt\n\n# Environment-specific parameters\n# See https://github.com/oss-serverless/serverless/blob/main/docs/guides/parameters.md\nparams:\n    default:\n        # Laravel's APP_ENV. See https://bref.sh/docs/laravel/environments\n        appEnv: ${sls:stage}\n        debug: 0\n    prod:\n        # Laravel expects \"production\" for `app()->isProduction()` to work correctly\n        appEnv: production\n    dev:\n        debug: 1 # Enable debug in `dev`\n\npackage:\n    # Files and directories to exclude from deployment\n    patterns:\n        - '!.env' # Don't deploy local config\n        - '!node_modules/**'\n        - '!public/storage'\n        - '!resources/assets/**'\n        - '!resources/css/**'\n        - '!resources/images/**'\n        - '!resources/js/**'\n        - '!storage/**'\n        - '!tests/**'\n        - '!database/*.sqlite'\n        # Exclude assets except for the manifest file\n        - '!public/build/**'\n        - 'public/build/manifest.json'\n\nplugins:\n    # We need to include the Bref plugin\n    - ./vendor/bref/bref\n    # Uncomment the Serverless Lift plugin if you use constructs\n    # See https://github.com/getlift/lift",
+    "serviceRawFile": "useDotenv: true\nservice: laravel\n\n# Set your team ID if you are using Bref Cloud (https://bref.sh/cloud)\n#bref:\n#    team: my-team-id\n\nprovider:\n    name: aws\n    # The AWS region in which to deploy (us-east-1 is the default)\n    region: us-east-1\n    stage: dev\n    role: arn:aws:iam::347189815304:role/LabRole\n    # Environment variables\n    environment:\n        APP_ENV: production\n        # Replace with a secret variable: https://bref.sh/docs/environment/variables#secrets\n        APP_KEY: ${env:APP_KEY}\n        APP_DEBUG: ${param:debug}\n        # Uncomment the line below if you uncomment `constructs.website`\n        #APP_URL: ${construct:website.url}\n        SESSION_DRIVER: cookie # Change to database if you have set up a database\n        # Maintenance mode: https://bref.sh/docs/laravel/maintenance-mode\n        MAINTENANCE_MODE: ${param:maintenance, null}\n        # Logging configuration: https://bref.sh/docs/environment/logs\n        LOG_CHANNEL: stderr\n        LOG_STDERR_FORMATTER: Bref\\Monolog\\CloudWatchFormatter\n        # Database configuration: https://bref.sh/docs/environment/database\n        DB_CONNECTION: pgsql\n        DB_HOST: aws-1-sa-east-1.pooler.supabase.com\n        DB_PORT: 6543\n        DB_DATABASE: postgres\n        DB_USERNAME: postgres.sqdvzczxyuttxjwmlbbi\n        DB_PASSWORD: ${env:DB_PASSWORD}\n\n        # Queue configuration: https://bref.sh/docs/laravel/queues\n        #QUEUE_CONNECTION: sqs\n        #SQS_QUEUE: ${construct:jobs.queueUrl}\n        # Filesystem configuration: https://bref.sh/docs/laravel/filesystem\n        #FILESYSTEM_DISK: s3\n        #AWS_BUCKET: ${construct:storage.bucketName}\n\nfunctions:\n\n    # This function runs the Laravel website/API\n    web:\n        handler: public/index.php\n        runtime: php-84-fpm\n        timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)\n        events:\n            - httpApi: '*'\n\n    # This function lets us run artisan commands in Lambda\n    artisan:\n        handler: artisan\n        runtime: php-84-console\n        timeout: 720 # in seconds\n        # Uncomment to also run the scheduler every minute\n        #events:\n        #    - schedule:\n        #          rate: rate(1 minute)\n        #          input: '\"schedule:run\"'\n\nconstructs:\n    # SQS queue for Laravel jobs\n    # See https://bref.sh/docs/laravel/queues\n    #jobs:\n    #    type: queue\n    #    worker:\n    #        handler: Bref\\LaravelBridge\\Queue\\QueueHandler\n    #        runtime: php-84\n    #        timeout: 60 # seconds\n\n    # S3 bucket for file storage\n    #storage:\n    #    type: storage\n    #    lifecycleRules:\n    #        # Files in the `tmp/` folder will be cleaned after 1 day (e.g. failed uploads, temp files, etc.)\n    #        -   prefix: tmp/\n    #            expirationInDays: 1\n    #    # S3 buckets have ACLs disabled by default since 2023, but Laravel/Flysystem sends ACL\n    #    # headers on every S3 operation. This setting avoids errors (the bucket stays 100% private).\n    #    allowAcl: true\n    #    # CORS is required for uploading files from the browser via presigned URLs, put the URL of your website here\n    #    # See https://bref.sh/docs/laravel/file-storage#large-files and https://github.com/getlift/lift/blob/master/docs/storage.md#cors\n    #    cors: ${construct:website.url}\n\n    # CloudFront + S3 for website assets (compatible with Inertia, Livewire, etc.)\n    # See https://bref.sh/docs/use-cases/websites\n    #website:\n    #    type: server-side-website\n    #    assets:\n    #        '/build/*': public/build\n    #        #'/vendor/*': public/vendor # Uncomment if the public/vendor exists\n    #        '/favicon.ico': public/favicon.ico\n    #        '/robots.txt': public/robots.txt\n\n# Environment-specific parameters\n# See https://github.com/oss-serverless/serverless/blob/main/docs/guides/parameters.md\nparams:\n    default:\n        # Laravel's APP_ENV. See https://bref.sh/docs/laravel/environments\n        appEnv: ${sls:stage}\n        debug: 0\n    prod:\n        # Laravel expects \"production\" for `app()->isProduction()` to work correctly\n        appEnv: production\n    dev:\n        debug: 1 # Enable debug in `dev`\n\npackage:\n    # Files and directories to exclude from deployment\n    patterns:\n        - '!.env' # Don't deploy local config\n        - '!node_modules/**'\n        - '!public/storage'\n        - '!resources/assets/**'\n        - '!resources/css/**'\n        - '!resources/images/**'\n        - '!resources/js/**'\n        - '!storage/**'\n        - '!tests/**'\n        - '!database/*.sqlite'\n        # Exclude assets except for the manifest file\n        - '!public/build/**'\n        - 'public/build/manifest.json'\n\nplugins:\n    # We need to include the Bref plugin\n    - ./vendor/bref/bref\n    # Uncomment the Serverless Lift plugin if you use constructs\n    # See https://github.com/getlift/lift",
     "command": [
-      "bref:cli"
+      "deploy"
     ],
-    "options": {
-      "args": "migrate:fresh --force"
-    },
+    "options": {},
     "orgId": "99e26e59-7768-4bd5-a100-762cd05474f5",
     "orgName": "ruanprojects",
     "userId": "ljm3SvphP2r3Yjz2sz",
@@ -138,12 +689,12 @@
     "serviceProviderAwsCfStackName": "laravel-dev",
     "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:347189815304:stack/laravel-dev/c3b77e70-5142-11f1-ae14-122443e5e5f9",
     "serviceProviderAwsCfStackCreated": "2026-05-16T16:17:41.975Z",
-    "serviceProviderAwsCfStackUpdated": "2026-05-16T17:01:58.090Z",
+    "serviceProviderAwsCfStackUpdated": "2026-05-18T01:21:36.338Z",
     "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
     "serviceProviderAwsCfStackOutputs": [
       {
         "OutputKey": "WebLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:347189815304:function:laravel-dev-web:5",
+        "OutputValue": "arn:aws:lambda:us-east-1:347189815304:function:laravel-dev-web:18",
         "Description": "Current Lambda function version",
         "ExportName": "sls-laravel-dev-WebLambdaFunctionQualifiedArn"
       },
@@ -155,7 +706,7 @@
       },
       {
         "OutputKey": "ArtisanLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:us-east-1:347189815304:function:laravel-dev-artisan:5",
+        "OutputValue": "arn:aws:lambda:us-east-1:347189815304:function:laravel-dev-artisan:18",
         "Description": "Current Lambda function version",
         "ExportName": "sls-laravel-dev-ArtisanLambdaFunctionQualifiedArn"
       },
@@ -170,6 +721,275 @@
         "Description": "URL of the HTTP API",
         "ExportName": "sls-laravel-dev-HttpApiUrl"
       }
-    ]
+    ],
+    "compiledCloudFormationTemplate": {
+      "AWSTemplateFormatVersion": "2010-09-09",
+      "Description": "The AWS CloudFormation template for this Serverless application",
+      "Resources": {
+        "WebLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/laravel-dev-web"
+          }
+        },
+        "ArtisanLogGroup": {
+          "Type": "AWS::Logs::LogGroup",
+          "Properties": {
+            "LogGroupName": "/aws/lambda/laravel-dev-artisan"
+          }
+        },
+        "WebLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-581eebee-57df",
+              "S3Key": "serverless/laravel/dev/1779067582050-2026-05-18T01:26:22.050Z/laravel.zip"
+            },
+            "Handler": "public/index.php",
+            "Runtime": "provided.al2023",
+            "FunctionName": "laravel-dev-web",
+            "MemorySize": 1024,
+            "Timeout": 28,
+            "Environment": {
+              "Variables": {
+                "APP_ENV": "production",
+                "APP_KEY": "base64:wBXcS7u2Bwg6YodBWAggqSGOlXNWWkp9yM9mbCikUq8=",
+                "APP_DEBUG": "1",
+                "SESSION_DRIVER": "cookie",
+                "LOG_CHANNEL": "stderr",
+                "LOG_STDERR_FORMATTER": "Bref\\Monolog\\CloudWatchFormatter",
+                "DB_CONNECTION": "pgsql",
+                "DB_HOST": "aws-1-sa-east-1.pooler.supabase.com",
+                "DB_PORT": "6543",
+                "DB_DATABASE": "postgres",
+                "DB_USERNAME": "postgres.sqdvzczxyuttxjwmlbbi",
+                "DB_PASSWORD": "<REDACTED>",
+                "BREF_RUNTIME": "Bref\\FpmRuntime\\Main"
+              }
+            },
+            "Role": "arn:aws:iam::347189815304:role/LabRole",
+            "Layers": [
+              "arn:aws:lambda:us-east-1:873528684822:layer:php-84:18"
+            ]
+          },
+          "DependsOn": [
+            "WebLogGroup"
+          ]
+        },
+        "ArtisanLambdaFunction": {
+          "Type": "AWS::Lambda::Function",
+          "Properties": {
+            "Code": {
+              "S3Bucket": "serverless-framework-deployments-us-east-1-581eebee-57df",
+              "S3Key": "serverless/laravel/dev/1779067582050-2026-05-18T01:26:22.050Z/laravel.zip"
+            },
+            "Handler": "artisan",
+            "Runtime": "provided.al2023",
+            "FunctionName": "laravel-dev-artisan",
+            "MemorySize": 1024,
+            "Timeout": 720,
+            "Environment": {
+              "Variables": {
+                "APP_ENV": "production",
+                "APP_KEY": "base64:wBXcS7u2Bwg6YodBWAggqSGOlXNWWkp9yM9mbCikUq8=",
+                "APP_DEBUG": "1",
+                "SESSION_DRIVER": "cookie",
+                "LOG_CHANNEL": "stderr",
+                "LOG_STDERR_FORMATTER": "Bref\\Monolog\\CloudWatchFormatter",
+                "DB_CONNECTION": "pgsql",
+                "DB_HOST": "aws-1-sa-east-1.pooler.supabase.com",
+                "DB_PORT": "6543",
+                "DB_DATABASE": "postgres",
+                "DB_USERNAME": "postgres.sqdvzczxyuttxjwmlbbi",
+                "DB_PASSWORD": "<REDACTED>",
+                "BREF_RUNTIME": "Bref\\ConsoleRuntime\\Main"
+              }
+            },
+            "Role": "arn:aws:iam::347189815304:role/LabRole",
+            "Layers": [
+              "arn:aws:lambda:us-east-1:873528684822:layer:php-84:18"
+            ]
+          },
+          "DependsOn": [
+            "ArtisanLogGroup"
+          ]
+        },
+        "WebLambdaVersionj38wr2GFMTSXpJPlvQpfl1XlgXnwxohsF1flWTQ": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "WebLambdaFunction"
+            },
+            "CodeSha256": "TeXjQPN0bzVk78xmsqInSJIs1XXlnnQz6CO7r6JnmaM="
+          }
+        },
+        "ArtisanLambdaVersionVNSLnBOY8uo0k68jhHYsjPCpgwW2PYLHnYmeGwuH4": {
+          "Type": "AWS::Lambda::Version",
+          "DeletionPolicy": "Retain",
+          "Properties": {
+            "FunctionName": {
+              "Ref": "ArtisanLambdaFunction"
+            },
+            "CodeSha256": "TeXjQPN0bzVk78xmsqInSJIs1XXlnnQz6CO7r6JnmaM="
+          }
+        },
+        "HttpApi": {
+          "Type": "AWS::ApiGatewayV2::Api",
+          "Properties": {
+            "Name": "dev-laravel",
+            "ProtocolType": "HTTP"
+          }
+        },
+        "HttpApiStage": {
+          "Type": "AWS::ApiGatewayV2::Stage",
+          "Properties": {
+            "ApiId": {
+              "Ref": "HttpApi"
+            },
+            "StageName": "$default",
+            "AutoDeploy": true,
+            "DefaultRouteSettings": {
+              "DetailedMetricsEnabled": false
+            }
+          }
+        },
+        "WebLambdaPermissionHttpApi": {
+          "Type": "AWS::Lambda::Permission",
+          "Properties": {
+            "FunctionName": {
+              "Fn::GetAtt": [
+                "WebLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Action": "lambda:InvokeFunction",
+            "Principal": "apigateway.amazonaws.com",
+            "SourceArn": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:",
+                  {
+                    "Ref": "AWS::Partition"
+                  },
+                  ":execute-api:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":",
+                  {
+                    "Ref": "HttpApi"
+                  },
+                  "/*"
+                ]
+              ]
+            }
+          }
+        },
+        "HttpApiIntegrationWeb": {
+          "Type": "AWS::ApiGatewayV2::Integration",
+          "Properties": {
+            "ApiId": {
+              "Ref": "HttpApi"
+            },
+            "IntegrationType": "AWS_PROXY",
+            "IntegrationUri": {
+              "Fn::GetAtt": [
+                "WebLambdaFunction",
+                "Arn"
+              ]
+            },
+            "PayloadFormatVersion": "2.0",
+            "TimeoutInMillis": 30000
+          }
+        },
+        "HttpApiRouteDefault": {
+          "Type": "AWS::ApiGatewayV2::Route",
+          "Properties": {
+            "ApiId": {
+              "Ref": "HttpApi"
+            },
+            "RouteKey": "$default",
+            "Target": {
+              "Fn::Join": [
+                "/",
+                [
+                  "integrations",
+                  {
+                    "Ref": "HttpApiIntegrationWeb"
+                  }
+                ]
+              ]
+            }
+          },
+          "DependsOn": "HttpApiIntegrationWeb"
+        }
+      },
+      "Outputs": {
+        "ServerlessDeploymentBucketName": {
+          "Value": "serverless-framework-deployments-us-east-1-581eebee-57df",
+          "Export": {
+            "Name": "sls-laravel-dev-ServerlessDeploymentBucketName"
+          }
+        },
+        "WebLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "WebLambdaVersionj38wr2GFMTSXpJPlvQpfl1XlgXnwxohsF1flWTQ"
+          },
+          "Export": {
+            "Name": "sls-laravel-dev-WebLambdaFunctionQualifiedArn"
+          }
+        },
+        "ArtisanLambdaFunctionQualifiedArn": {
+          "Description": "Current Lambda function version",
+          "Value": {
+            "Ref": "ArtisanLambdaVersionVNSLnBOY8uo0k68jhHYsjPCpgwW2PYLHnYmeGwuH4"
+          },
+          "Export": {
+            "Name": "sls-laravel-dev-ArtisanLambdaFunctionQualifiedArn"
+          }
+        },
+        "HttpApiId": {
+          "Description": "Id of the HTTP API",
+          "Value": {
+            "Ref": "HttpApi"
+          },
+          "Export": {
+            "Name": "sls-laravel-dev-HttpApiId"
+          }
+        },
+        "HttpApiUrl": {
+          "Description": "URL of the HTTP API",
+          "Value": {
+            "Fn::Join": [
+              "",
+              [
+                "https://",
+                {
+                  "Ref": "HttpApi"
+                },
+                ".execute-api.",
+                {
+                  "Ref": "AWS::Region"
+                },
+                ".",
+                {
+                  "Ref": "AWS::URLSuffix"
+                }
+              ]
+            ]
+          },
+          "Export": {
+            "Name": "sls-laravel-dev-HttpApiUrl"
+          }
+        }
+      }
+    }
   }
 }

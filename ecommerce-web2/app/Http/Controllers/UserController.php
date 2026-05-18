@@ -31,7 +31,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'is_admin' => $request->has('is_admin'), // Se o checkbox for marcado, será true
+            'is_admin' => $request->has('is_admin'),
         ]);
 
         return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso!');
@@ -47,7 +47,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed', // Senha se torna opcional na edição
+            'password' => 'nullable|string|min:8|confirmed',
         ]);
 
         $userData = [
@@ -56,7 +56,6 @@ class UserController extends Controller
             'is_admin' => $request->has('is_admin'),
         ];
 
-        // Só atualiza a senha se o usuário digitou uma nova
         if ($request->filled('password')) {
             $userData['password'] = Hash::make($request->password);
         }

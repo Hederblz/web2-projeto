@@ -10,14 +10,13 @@ class ProdutoController extends Controller
 {
     public function index()
     {
-        // O "with('categoria')" evita o problema de performance N+1 no banco de dados
         $produtos = Produto::with('categoria')->get();
         return view('produtos.index', compact('produtos'));
     }
 
     public function create()
     {
-        $categorias = Categoria::all(); // Necessário para listar no <select> do formulário
+        $categorias = Categoria::all();
         return view('produtos.create', compact('categorias'));
     }
 

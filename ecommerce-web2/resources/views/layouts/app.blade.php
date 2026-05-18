@@ -12,10 +12,9 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa; /* Fundo cinza bem claro para destacar os Cards brancos */
+            background-color: #f8f9fa;
         }
         .navbar-custom {
-            /* Gradiente escuro elegante */
             background: linear-gradient(90deg, #1e293b 0%, #0f172a 100%);
         }
         .navbar-custom .nav-link {

@@ -54,7 +54,6 @@ class CategoriaController extends Controller
 
     public function destroy(Categoria $categoria)
     {
-        // Opcional: Validar se existem produtos atrelados antes de excluir
         $categoria->delete();
         return redirect()->route('categorias.index')->with('success', 'Categoria excluída com sucesso!');
     }

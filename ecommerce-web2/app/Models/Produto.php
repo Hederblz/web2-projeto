@@ -9,7 +9,19 @@ class Produto extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['categoria_id', 'nome', 'descricao', 'preco', 'estoque'];
+    protected $fillable = [
+        'categoria_id',
+        'nome',
+        'descricao',
+        'preco',
+        'estoque',
+        'user_id' 
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function categoria()
     {

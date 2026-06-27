@@ -9,10 +9,14 @@ class Categoria extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'slug'];
+    protected $fillable = [
+        'nome',
+        'slug',
+        'user_id'
+    ];
 
-    public function produtos()
+    public function user()
     {
-        return $this->hasMany(Produto::class);
+        return $this->belongsTo(User::class);
     }
 }

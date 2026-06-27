@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class CategoriaController extends Controller
 {
     public function index()
     {
-        $categorias = Categoria::all();
+        // Pega APENAS as categorias do usuário logado
+        $categorias = Auth::user()->categorias;
+        
         return view('categorias.index', compact('categorias'));
     }
 
@@ -22,39 +24,48 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nome' => 'required|string|max:255|unique:categorias,nome',
+            'nome' => 'required|string|max:255',
         ]);
 
+        // Cria a categoria e já atrela ao usuário logado
         Categoria::create([
             'nome' => $request->nome,
-            'slug' => Str::slug($request->nome),
+            'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('categorias.index')->with('success', 'Categoria criada com sucesso!');
+        return redirect()->route('categorias.index')->with('success', 'Categoria criada com sucesso.');
     }
 
-    public function edit(Categoria $categoria)
+    public function edit($id)
     {
+        // Segurança: Busca a categoria APENAS se for do usuário logado
+        $categoria = Categoria::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        
         return view('categorias.edit', compact('categoria'));
     }
 
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request, $id)
     {
+        // Segurança: Busca a categoria
+        $categoria = Categoria::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+
         $request->validate([
-            'nome' => 'required|string|max:255|unique:categorias,nome,' . $categoria->id,
+            'nome' => 'required|string|max:255',
         ]);
 
         $categoria->update([
             'nome' => $request->nome,
-            'slug' => Str::slug($request->nome),
         ]);
 
-        return redirect()->route('categorias.index')->with('success', 'Categoria atualizada com sucesso!');
+        return redirect()->route('categorias.index')->with('success', 'Categoria atualizada com sucesso.');
     }
 
-    public function destroy(Categoria $categoria)
+    public function destroy($id)
     {
+        // Segurança: Busca e deleta
+        $categoria = Categoria::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $categoria->delete();
-        return redirect()->route('categorias.index')->with('success', 'Categoria excluída com sucesso!');
+
+        return redirect()->route('categorias.index')->with('success', 'Categoria excluída com sucesso.');
     }
 }

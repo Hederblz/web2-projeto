@@ -27,4 +27,17 @@ class User extends Authenticatable
         'password' => 'hashed',
         'is_admin' => 'boolean',
     ];
+
+
+    public function categorias()
+    {
+        return $this->hasMany(Categoria::class);
+    }
+
+    public function produtos()
+    {
+        return $this->hasMany(Produto::class);
+    }
+
+
 }

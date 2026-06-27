@@ -5,60 +5,92 @@ namespace App\Http\Controllers;
 use App\Models\Produto;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProdutoController extends Controller
 {
     public function index()
     {
-        $produtos = Produto::with('categoria')->get();
+        // Pega APENAS os produtos do usuário logado (com a categoria para otimizar)
+        $produtos = Auth::user()->produtos()->with('categoria')->get();
+        
         return view('produtos.index', compact('produtos'));
     }
 
     public function create()
     {
-        $categorias = Categoria::all();
+        // Manda pro formulário APENAS as categorias do usuário logado
+        $categorias = Auth::user()->categorias;
+        
         return view('produtos.create', compact('categorias'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'categoria_id' => 'required|exists:categorias,id',
             'nome' => 'required|string|max:255',
-            'descricao' => 'nullable|string',
-            'preco' => 'required|numeric|min:0',
-            'estoque' => 'required|integer|min:0',
+            'categoria_id' => 'required|exists:categorias,id',
+            'preco' => 'required|numeric',
+            'estoque' => 'required|integer',
+            'descricao' => 'nullable|string'
         ]);
 
-        Produto::create($request->all());
+        // Segurança Extra: Garante que o usuário não fraudou o HTML enviando um ID de categoria de outra pessoa
+        $categoria = Categoria::where('id', $request->categoria_id)->where('user_id', Auth::id())->firstOrFail();
 
-        return redirect()->route('produtos.index')->with('success', 'Produto criado com sucesso!');
+        Produto::create([
+            'nome' => $request->nome,
+            'categoria_id' => $categoria->id,
+            'preco' => $request->preco,
+            'estoque' => $request->estoque,
+            'descricao' => $request->descricao,
+            'user_id' => Auth::id(), // Salva o dono do produto
+        ]);
+
+        return redirect()->route('produtos.index')->with('success', 'Produto criado com sucesso.');
     }
 
-    public function edit(Produto $produto)
+    public function edit($id)
     {
-        $categorias = Categoria::all();
+        // Segurança: Busca o produto APENAS se for do usuário logado
+        $produto = Produto::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $categorias = Auth::user()->categorias;
+        
         return view('produtos.edit', compact('produto', 'categorias'));
     }
 
-    public function update(Request $request, Produto $produto)
+    public function update(Request $request, $id)
     {
+        $produto = Produto::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+
         $request->validate([
-            'categoria_id' => 'required|exists:categorias,id',
             'nome' => 'required|string|max:255',
-            'descricao' => 'nullable|string',
-            'preco' => 'required|numeric|min:0',
-            'estoque' => 'required|integer|min:0',
+            'categoria_id' => 'required|exists:categorias,id',
+            'preco' => 'required|numeric',
+            'estoque' => 'required|integer',
+            'descricao' => 'nullable|string'
         ]);
 
-        $produto->update($request->all());
+        // Verifica a categoria novamente
+        $categoria = Categoria::where('id', $request->categoria_id)->where('user_id', Auth::id())->firstOrFail();
 
-        return redirect()->route('produtos.index')->with('success', 'Produto atualizado com sucesso!');
+        $produto->update([
+            'nome' => $request->nome,
+            'categoria_id' => $categoria->id,
+            'preco' => $request->preco,
+            'estoque' => $request->estoque,
+            'descricao' => $request->descricao,
+        ]);
+
+        return redirect()->route('produtos.index')->with('success', 'Produto atualizado com sucesso.');
     }
 
-    public function destroy(Produto $produto)
+    public function destroy($id)
     {
+        // Segurança: Busca e deleta
+        $produto = Produto::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $produto->delete();
-        return redirect()->route('produtos.index')->with('success', 'Produto excluído com sucesso!');
+
+        return redirect()->route('produtos.index')->with('success', 'Produto excluído com sucesso.');
     }
 }

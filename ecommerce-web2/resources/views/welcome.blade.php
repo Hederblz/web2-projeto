@@ -32,6 +32,15 @@
                         <a class="nav-link text-light" href="{{ url('/produtos') }}">Produtos</a>
                     </li>
                 </ul>
+
+                <div class="d-flex align-items-center gap-2">
+                    @auth
+                        <a href="{{ url('/categorias') }}" class="btn btn-primary fw-semibold px-4">Ir para o Painel</a>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-outline-light fw-semibold px-4">Entrar</a>
+                        <a href="{{ route('register') }}" class="btn btn-primary fw-semibold px-4">Criar Conta</a>
+                    @endauth
+                </div>
             </div>
         </div>
     </nav>
@@ -48,11 +57,11 @@
                         O sistema completo para o seu E-commerce. Controle suas categorias, gerencie o estoque dos seus produtos e administre seus usuários em um só lugar de forma simples e intuitiva.
                     </p>
                     <div class="d-grid gap-3 d-md-flex justify-content-md-start">
-                        <a href="{{ url('/produtos') }}" class="btn btn-primary btn-lg px-4 py-3 shadow-sm rounded-3 fw-medium">
-                            Acessar Produtos
+                        <a href="{{ route('login') }}" class="btn btn-primary btn-lg px-4">
+                            Acessar Produtos <span class="btn-arrow">→</span>
                         </a>
-                        <a href="{{ url('/categorias') }}" class="btn text-primary fw-medium btn-lg px-4 py-3 rounded-3" style="background-color: #e7f1ff; border: 1px solid #cfe2ff;">
-                            Ver Categorias
+                        <a href="{{ route('login') }}" class="btn btn-outline-secondary btn-lg px-4">
+                            Ver Categorias <span class="btn-arrow">→</span>
                         </a>
                     </div>
                 </div>

@@ -34,6 +34,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" href="{{ route('produtos.index') }}">Produtos</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ route('pedidos.index') }}">Pedidos</a>
+                    </li>
                 </ul>
 
                 <div class="d-flex align-items-center gap-3">

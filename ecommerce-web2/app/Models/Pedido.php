@@ -5,17 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Produto extends Model
+class Pedido extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'categoria_id',
-        'nome',
-        'descricao',
-        'preco',
-        'estoque',
-        'user_id' 
+        'user_id',
+        'nome_cliente',
+        'status',
+        'total'
     ];
 
     public function user()
@@ -23,14 +21,10 @@ class Produto extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function categoria()
+    // Relacionamento de Muitos para Muitos com Produtos
+    public function produtos()
     {
-        return $this->belongsTo(Categoria::class);
-    }
-
-    public function pedidos()
-    {
-        return $this->belongsToMany(Pedido::class)
+        return $this->belongsToMany(Produto::class)
                     ->withPivot('quantidade', 'preco_unitario')
                     ->withTimestamps();
     }

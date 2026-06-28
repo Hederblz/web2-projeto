@@ -11,7 +11,6 @@ class ProdutoController extends Controller
 {
     public function index()
     {
-        // Pega APENAS os produtos do usuário logado (com a categoria para otimizar)
         $produtos = Auth::user()->produtos()->with('categoria')->get();
         
         return view('produtos.index', compact('produtos'));
@@ -19,7 +18,6 @@ class ProdutoController extends Controller
 
     public function create()
     {
-        // Manda pro formulário APENAS as categorias do usuário logado
         $categorias = Auth::user()->categorias;
         
         return view('produtos.create', compact('categorias'));
@@ -35,7 +33,6 @@ class ProdutoController extends Controller
             'descricao' => 'nullable|string'
         ]);
 
-        // Segurança Extra: Garante que o usuário não fraudou o HTML enviando um ID de categoria de outra pessoa
         $categoria = Categoria::where('id', $request->categoria_id)->where('user_id', Auth::id())->firstOrFail();
 
         Produto::create([
@@ -44,7 +41,7 @@ class ProdutoController extends Controller
             'preco' => $request->preco,
             'estoque' => $request->estoque,
             'descricao' => $request->descricao,
-            'user_id' => Auth::id(), // Salva o dono do produto
+            'user_id' => Auth::id(),
         ]);
 
         return redirect()->route('produtos.index')->with('success', 'Produto criado com sucesso.');
@@ -52,7 +49,6 @@ class ProdutoController extends Controller
 
     public function edit($id)
     {
-        // Segurança: Busca o produto APENAS se for do usuário logado
         $produto = Produto::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $categorias = Auth::user()->categorias;
         
@@ -71,7 +67,7 @@ class ProdutoController extends Controller
             'descricao' => 'nullable|string'
         ]);
 
-        // Verifica a categoria novamente
+
         $categoria = Categoria::where('id', $request->categoria_id)->where('user_id', Auth::id())->firstOrFail();
 
         $produto->update([
@@ -87,7 +83,6 @@ class ProdutoController extends Controller
 
     public function destroy($id)
     {
-        // Segurança: Busca e deleta
         $produto = Produto::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $produto->delete();
 

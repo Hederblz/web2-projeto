@@ -10,7 +10,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::cachedAll();
+
         return view('users.index', compact('users'));
     }
 
@@ -33,6 +34,8 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'is_admin' => $request->has('is_admin'),
         ]);
+
+        User::clearCache();
 
         return redirect()->route('users.index')->with('success', 'Usuário criado com sucesso!');
     }
@@ -62,12 +65,17 @@ class UserController extends Controller
 
         $user->update($userData);
 
+        User::clearCache();
+
         return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso!');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
+
+        User::clearCache();
+
         return redirect()->route('users.index')->with('success', 'Usuário excluído com sucesso!');
     }
 }

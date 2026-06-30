@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Pedido extends Model
 {
@@ -27,5 +28,17 @@ class Pedido extends Model
         return $this->belongsToMany(Produto::class)
                     ->withPivot('quantidade', 'preco_unitario')
                     ->withTimestamps();
+    }
+
+    public static function forUser(int $userId)
+    {
+        return Cache::remember('pedidos_lista_user_' . $userId, 86400, function () use ($userId) {
+            return self::where('user_id', $userId)->with('produtos')->latest()->get();
+        });
+    }
+
+    public static function clearUserCache(int $userId)
+    {
+        Cache::forget('pedidos_lista_user_' . $userId);
     }
 }

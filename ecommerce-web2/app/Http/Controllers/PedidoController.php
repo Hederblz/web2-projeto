@@ -11,14 +11,14 @@ class PedidoController extends Controller
 {
     public function index()
     {
-        $pedidos = Auth::user()->pedidos()->with('produtos')->latest()->get();
+        $pedidos = Pedido::forUser(Auth::id());
         
         return view('pedidos.index', compact('pedidos'));
     }
 
     public function create()
     {
-        $produtos = Auth::user()->produtos;
+        $produtos = Produto::forUser(Auth::id());
         
         return view('pedidos.create', compact('produtos'));
     }
@@ -66,6 +66,9 @@ class PedidoController extends Controller
 
         $pedido->produtos()->sync($dadosParaPivot);
 
+        Pedido::clearUserCache(Auth::id());
+        Produto::clearUserCache(Auth::id());
+
         return redirect()->route('pedidos.index')->with('success', 'Venda registrada com sucesso!');
     }
 
@@ -95,6 +98,8 @@ class PedidoController extends Controller
             'status' => $request->status,
         ]);
 
+        Pedido::clearUserCache(Auth::id());
+
         return redirect()->route('pedidos.index')->with('success', 'Status do pedido atualizado!');
     }
 
@@ -103,6 +108,8 @@ class PedidoController extends Controller
         $pedido = Pedido::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         
         $pedido->delete();
+
+        Pedido::clearUserCache(Auth::id());
 
         return redirect()->route('pedidos.index')->with('success', 'Pedido excluído com sucesso.');
     }

@@ -11,14 +11,14 @@ class ProdutoController extends Controller
 {
     public function index()
     {
-        $produtos = Auth::user()->produtos()->with('categoria')->get();
+        $produtos = Produto::forUser(Auth::id());
         
         return view('produtos.index', compact('produtos'));
     }
 
     public function create()
     {
-        $categorias = Auth::user()->categorias;
+        $categorias = Categoria::forUser(Auth::id());
         
         return view('produtos.create', compact('categorias'));
     }
@@ -43,6 +43,8 @@ class ProdutoController extends Controller
             'descricao' => $request->descricao,
             'user_id' => Auth::id(),
         ]);
+
+        Produto::clearUserCache(Auth::id());
 
         return redirect()->route('produtos.index')->with('success', 'Produto criado com sucesso.');
     }
@@ -78,6 +80,8 @@ class ProdutoController extends Controller
             'descricao' => $request->descricao,
         ]);
 
+        Produto::clearUserCache(Auth::id());
+
         return redirect()->route('produtos.index')->with('success', 'Produto atualizado com sucesso.');
     }
 
@@ -85,6 +89,8 @@ class ProdutoController extends Controller
     {
         $produto = Produto::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $produto->delete();
+
+        Produto::clearUserCache(Auth::id());
 
         return redirect()->route('produtos.index')->with('success', 'Produto excluído com sucesso.');
     }

@@ -10,8 +10,7 @@ class CategoriaController extends Controller
 {
     public function index()
     {
-        // Pega APENAS as categorias do usuário logado
-        $categorias = Auth::user()->categorias;
+        $categorias = Categoria::forUser(Auth::id());
         
         return view('categorias.index', compact('categorias'));
     }
@@ -32,6 +31,8 @@ class CategoriaController extends Controller
             'nome' => $request->nome,
             'user_id' => Auth::id(),
         ]);
+
+        Categoria::clearUserCache(Auth::id());
 
         return redirect()->route('categorias.index')->with('success', 'Categoria criada com sucesso.');
     }
@@ -57,6 +58,8 @@ class CategoriaController extends Controller
             'nome' => $request->nome,
         ]);
 
+        Categoria::clearUserCache(Auth::id());
+
         return redirect()->route('categorias.index')->with('success', 'Categoria atualizada com sucesso.');
     }
 
@@ -65,6 +68,8 @@ class CategoriaController extends Controller
         // Segurança: Busca e deleta
         $categoria = Categoria::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         $categoria->delete();
+
+        Categoria::clearUserCache(Auth::id());
 
         return redirect()->route('categorias.index')->with('success', 'Categoria excluída com sucesso.');
     }

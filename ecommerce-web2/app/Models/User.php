@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
@@ -44,4 +45,15 @@ class User extends Authenticatable
         return $this->hasMany(Pedido::class);
     }
 
+    public static function cachedAll()
+    {
+        return Cache::remember('users_lista', 86400, function () {
+            return self::all();
+        });
+    }
+
+    public static function clearCache()
+    {
+        Cache::forget('users_lista');
+    }
 }

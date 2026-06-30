@@ -18,7 +18,10 @@ provider:
         APP_KEY: ${env:APP_KEY}
         APP_DEBUG: ${param:debug}
         # Uncomment the line below if you uncomment `constructs.website`
-        #APP_URL: ${construct:website.url}
+        
+        APP_URL: https://qktuepw0x4.execute-api.us-east-1.amazonaws.com
+        ASSET_URL: https://qktuepw0x4.execute-api.us-east-1.amazonaws.com
+
         SESSION_DRIVER: cookie # Change to database if you have set up a database
         # Maintenance mode: https://bref.sh/docs/laravel/maintenance-mode
         MAINTENANCE_MODE: ${param:maintenance, null}
@@ -61,40 +64,6 @@ functions:
         #          rate: rate(1 minute)
         #          input: '"schedule:run"'
 
-constructs:
-    # SQS queue for Laravel jobs
-    # See https://bref.sh/docs/laravel/queues
-    #jobs:
-    #    type: queue
-    #    worker:
-    #        handler: Bref\LaravelBridge\Queue\QueueHandler
-    #        runtime: php-84
-    #        timeout: 60 # seconds
-
-    # S3 bucket for file storage
-    #storage:
-    #    type: storage
-    #    lifecycleRules:
-    #        # Files in the `tmp/` folder will be cleaned after 1 day (e.g. failed uploads, temp files, etc.)
-    #        -   prefix: tmp/
-    #            expirationInDays: 1
-    #    # S3 buckets have ACLs disabled by default since 2023, but Laravel/Flysystem sends ACL
-    #    # headers on every S3 operation. This setting avoids errors (the bucket stays 100% private).
-    #    allowAcl: true
-    #    # CORS is required for uploading files from the browser via presigned URLs, put the URL of your website here
-    #    # See https://bref.sh/docs/laravel/file-storage#large-files and https://github.com/getlift/lift/blob/master/docs/storage.md#cors
-    #    cors: ${construct:website.url}
-
-    # CloudFront + S3 for website assets (compatible with Inertia, Livewire, etc.)
-    # See https://bref.sh/docs/use-cases/websites
-    #website:
-    #    type: server-side-website
-    #    assets:
-    #        '/build/*': public/build
-    #        #'/vendor/*': public/vendor # Uncomment if the public/vendor exists
-    #        '/favicon.ico': public/favicon.ico
-    #        '/robots.txt': public/robots.txt
-
 # Environment-specific parameters
 # See https://github.com/oss-serverless/serverless/blob/main/docs/guides/parameters.md
 params:
@@ -121,12 +90,8 @@ package:
         - '!storage/**'
         - '!tests/**'
         - '!database/*.sqlite'
-        # Exclude assets except for the manifest file
-        - '!public/build/**'
-        - 'public/build/manifest.json'
+        - 'public/build/**'
 
 plugins:
     # We need to include the Bref plugin
     - ./vendor/bref/bref
-    # Uncomment the Serverless Lift plugin if you use constructs
-    # See https://github.com/getlift/lift

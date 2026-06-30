@@ -42,7 +42,7 @@ DB_HOST=aws-1-sa-east-1.pooler.supabase.com
 DB_PORT=6543
 DB_DATABASE=postgres
 DB_USERNAME=postgres.sqdvzczxyuttxjwmlbbi
-DB_PASSWORD=senha_secreta_aqui
+DB_PASSWORD=6UacANOEEIUdMWg4
 ```
 
 4. Gerar a Chave da Aplicação

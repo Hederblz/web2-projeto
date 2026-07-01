@@ -1,5 +1,6 @@
 useDotenv: true
 service: laravel
+frameworkVersion: '3'
 
 # Set your team ID if you are using Bref Cloud (https://bref.sh/cloud)
 #bref:

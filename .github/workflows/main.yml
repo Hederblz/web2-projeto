@@ -10,6 +10,10 @@ jobs:
     name: Build & Deploy para Produção
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./ecommerce-web2
+
     steps:
       - name: Checkout do Código
         uses: actions/checkout@v4

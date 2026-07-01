@@ -39,7 +39,7 @@ jobs:
           npm run build
 
       - name: Instalar Serverless Framework
-        run: npm install -g serverless
+        run: npm install -g serverless@3
 
       - name: Deploy Serverless
         run: serverless deploy --stage prod --verbose
